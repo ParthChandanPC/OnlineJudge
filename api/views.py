@@ -2,11 +2,12 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-# from yaml import serialize
+
 from .serializers import ProblemSerializer, TestCasesSerializer, SubmissionsSerializer, UserSerializer, CodeSerializer
 from OJ.models import Problem, TestCases, Submissions, User
 from django.http import HttpResponse
-# Create your views here.
+from django.views.decorators.csrf import csrf_exempt
+from .run_code import run_code
 
 
 @api_view(['GET'])
@@ -53,13 +54,16 @@ def ListOfSubmissionsOfUser(request,id):
         serializer = SubmissionsSerializer(Submissions.objects.filter(user=user), many=True)
         return Response(serializer.data)
 
-
+    
+@csrf_exempt
 @api_view(['POST'])
 def Code_post(request):
     if request.method == 'POST':
         serializer = CodeSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            print(serializer.data)
-            return Response(serializer.data, status=201)
+            user = User.objects.get(id=serializer.data['user_id'])
+            problem = Problem.objects.get(id=serializer.data['problem_id'])
+            output = run_code(serializer.data['code'],serializer.data['language'],problem.id,user.id)
+            
+            return Response(output, status=201)
         return Response(serializer.errors, status=400)
