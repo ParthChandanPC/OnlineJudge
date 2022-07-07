@@ -7,37 +7,24 @@ import time
 def run_python(code,input_):
 
     file_name = 'code.py'
-    file = open(file_name, 'w')
+    file = open(file_name, 'w+')
     file.write(code)
+    t = file.read()
+    print(t)
     file.close()
 
-    print(input_)
+    process = subprocess.run(['python', file_name], input = input_,encoding="utf-8",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.stdout, process.stderr
 
-    if input != '':
-        t_file = 'test_case.txt'
-        t_file_ = open('test_case.txt','w')
-        t_file_.write(input_)
-        t_file_.close()
-        print('hi')
-        process = subprocess.Popen(['python', file_name, "<",t_file], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = process.communicate()
-        print(stdout)
-        os.remove('test_case.txt')
-
-        
-    else:
-        process = subprocess.Popen(['python', file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = process.communicate()
     os.remove(file_name)
 
 
     if stdout:
-        print(stdout.decode('utf-8'))
-        return stdout.decode('utf-8')
+        s = stdout
+        s.replace('\n','<br>')
+        return s
     else:
-
-
-        return stderr.decode('utf-8')
+        return stderr
 
 
 def run_c(code, problem_id):
