@@ -15,53 +15,47 @@ def run_python(code,input_):
     stdout, stderr = process.stdout, process.stderr
 
     os.remove(file_name)
-    print(stdout)
+    
     if stdout:
         return stdout
     else:
         return stderr
 
 
-def run_c(code, input_):
+def run_c(code,input_):
     file_name = 'code.c'
     file = open(file_name, 'w')
     file.write(code)
     file.close()
 
-
-    subprocess.run(["g++", file_name],input = input_,encoding="utf-8")
-    f = open('a.txt','w')
-    subprocess.run("a",stdout=f)
-    f.close()
-    f = open('a.txt', 'r')
-    output = f.read()
-    f.close()
-    os.remove('a.txt') 
+    subprocess.run(["gcc", file_name])
+    f = subprocess.run("a",input = input_,encoding="utf-8",stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+   
     os.remove(file_name)
     os.remove('a.exe')
 
-    return output
+    if f.stdout:
+        return f.stdout
+    else:
+        return f.stderr
 
-def run_cpp(code, input_):
+def run_cpp(code,input_):
     file_name = 'code.cpp'
     file = open(file_name, 'w')
     file.write(code)
     file.close()
 
     process = subprocess.run(['g++', file_name] )
-    f = open('a.txt','w')
-    subprocess.run("a",stdout=f)
-    f.close()
-    f = open('a.txt', 'r')
-    output = f.read()
-    f.close()
-    os.remove('a.txt') 
+    f = subprocess.run("a",input = input_,encoding="utf-8",stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    
     os.remove(file_name)
     os.remove('a.exe')
 
-    return output
-def run_javascript(code, input_):
-    # Create a file with the code
+    if f.stdout:
+        return f.stdout
+    else:
+        return f.stderr
+def run_javascript(code,input_):
     file_name = 'code.js'
     file = open(file_name, 'w+')
     file.write(code)
@@ -69,11 +63,12 @@ def run_javascript(code, input_):
 
     process = subprocess.run(['node', file_name], input = input_,encoding="utf-8",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.stdout, process.stderr
+
     os.remove(file_name)
+    
 
     if stdout:
         s = stdout
-        s.replace('\n','<br>')
         return s
     else:
         return stderr
@@ -118,7 +113,8 @@ def evaluation(code,language,problem_id,user_id):
 @Run_time
 def Run(code,language,input_):
     return run_code(code,language,input_)
-  
+
+
 def Submit(code,language,problem_id,user_id):
     try:
         problem = Problem.objects.get(id=problem_id)
@@ -129,12 +125,10 @@ def Submit(code,language,problem_id,user_id):
     test_cases = TestCases.objects.filter(problem=problem)
 
     length_test_cases = len(test_cases)
-
+    
     for input_ in test_cases:
         Result = Run(code, language,input_.input)
-        # print(Result['result'][:-1].encode('utf-8') == input_.output.encode('utf-8'))
         input_.output = input_.output.encode('utf-8')
-        # print(Result['result'][:-1].encode('utf-8'))
         Result['result'] = Result['result'][:-1].encode('utf-8')
         if Result['result'] == input_.output and Result['run_time'] <= problem.time_limit:
             length_test_cases -= 1
@@ -147,3 +141,4 @@ def Submit(code,language,problem_id,user_id):
         out = 'Accepted'
 
     return out
+    
