@@ -1,7 +1,7 @@
 {% extends 'main.html' %} {% load static%} {% block content%}
 <div class="nav">
     <ul class='left'>
-        <li><i class="fa fa-square" style="font-size:40px;color:rgb(255, 255, 255)">OnlineJudge</i></li>
+        <li>CodeAlong</li>
         <li>
             <a href='{% url "home"%}'>
                 <h3>Home</h3>
@@ -14,12 +14,11 @@
                 <h3>Logout</h3>
             </a>
         </li>
-        <!-- <li><a href= '{% url "register"%}'><h3>Register</h3></a></li> -->
 
     </ul>
 </div>
 <div class="container">
-    <div class="header">IDE for Online Judge</div>
+    <div class="header">IDE</div>
     <div class="language-option">
         <label for="languages">Choose a Language :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <select id="languages" class="languages" onchange="changeLanguage()">
@@ -33,7 +32,7 @@
     <div class="editor" id="editor"></div>
 
     <div class="button-container">
-        <button class="btn" onclick="RunCode()"> Run Code</button>
+        <button class="btn" onclick="RunCode()"> Run</button>
         <button class="btn" onclick="SubmitCode()"> Submit</button>
     </div>
 
@@ -44,7 +43,7 @@
         <h1> Input</h1>
         <textarea rows="10" cols="150" name="comment" form="usrform" id='msg'></textarea>
     </div>
-    <h1> Out Put</h1>
+    <h1> Output</h1>
     <div class="output">
         <textarea rows="10" cols="150" name="comment" form="usrform" id='outmsg' readonly></textarea>
     </div>
@@ -55,8 +54,6 @@
 <script src="{%static 'js/lib/theme-twilight.js'%}"></script>
 <script>
     let editor;
-    // const element = document.getElementById("editor");
-    // console.log(element)
     document.getElementById('editor').style.fontSize = '16px';
     window.onload = function() {
         editor = ace.edit("editor");
@@ -65,7 +62,6 @@
     }
 
     console.log("Hello World!");
-
 
     function changeLanguage() {
 
@@ -79,7 +75,6 @@
 
     function RunCode() {
 
-        //console.log($("textarea#msg").val())
         $.ajax({
 
             url: "http://127.0.0.1:8000/api/v1/code-post",
@@ -100,7 +95,6 @@
                 let r = document.getElementById("outmsg");
                 r.innerHTML = "Run Time =" + response.run_time + '\n' + response.result;
 
-                //$("output").append(r)
             }
 
 
@@ -109,7 +103,6 @@
 
     function SubmitCode() {
         alert("Are you sure you want to submit the code?");
-        //console.log($("textarea#msg").val())
         $.ajax({
 
             url: "http://127.0.0.1:8000/api/v1/code-post",
@@ -138,7 +131,6 @@
                 let r = document.getElementById("outmsg");
                 r.innerHTML = response;
 
-                //$("output").append(r)
             }
 
 
