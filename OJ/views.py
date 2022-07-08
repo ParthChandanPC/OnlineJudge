@@ -18,8 +18,8 @@ def loginUser(request):
             return redirect('home')
         else:
             messages.info(request, 'Username or password is incorrect')
-            return render(request, 'login.html')
-    return render(request,'login.html')
+            return render(request, 'login.html',{})
+    return render(request,'login.html',{})
     # login function
 def register(request):
     if request.method == 'POST':
@@ -47,5 +47,5 @@ def problem_view(request,id):
 
 @login_required(login_url='login')
 def ide(request,problem_id):
-    user_id = 1
+    user_id = request.user.id
     return render(request,'ide.html',{'problem_id':problem_id,'user_id':user_id})

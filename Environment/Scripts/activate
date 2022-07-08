@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\pavan\OneDrive\Desktop\OnlineJudge\env"
+VIRTUAL_ENV="C:\Users\parth\OneDrive\Desktop\CS\OnlineJudge\Environment"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

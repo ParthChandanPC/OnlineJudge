@@ -1,23 +1,28 @@
-{% extends 'main.html' %}
-{% load static%}
-
-{% block content%}
+{% extends 'main.html' %} {% load static%} {% block content%}
 <div class="nav">
-    <ul class = 'left'>
+    <ul class='left'>
         <li><i class="fa fa-square" style="font-size:40px;color:rgb(255, 255, 255)">OnlineJudge</i></li>
-        <li><a href= '{% url "home"%}'><h3>Home</h3></a></li>
+        <li>
+            <a href='{% url "home"%}'>
+                <h3>Home</h3>
+            </a>
+        </li>
     </ul>
     <ul class="right">
-        <li><a href= '{% url "logout"%}'><h3>Logout</h3></a></li>
+        <li>
+            <a href='{% url "logout"%}'>
+                <h3>Logout</h3>
+            </a>
+        </li>
         <!-- <li><a href= '{% url "register"%}'><h3>Register</h3></a></li> -->
-        
+
     </ul>
 </div>
 <div class="container">
     <div class="header">IDE for Online Judge</div>
     <div class="language-option">
-            <label for="languages">Choose a Language :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <select id="languages" class="languages" onchange="changeLanguage()">
+        <label for="languages">Choose a Language :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <select id="languages" class="languages" onchange="changeLanguage()">
                 <option value="c">C</option>
                 <option value="cpp">C++</option>
                 <option value="python">Python</option>
@@ -28,32 +33,31 @@
     <div class="editor" id="editor"></div>
 
     <div class="button-container">
-        <button class="btn" onclick="executeCode()"> Run Code</button>
+        <button class="btn" onclick="RunCode()"> Run Code</button>
+        <button class="btn" onclick="SubmitCode()"> Submit</button>
     </div>
 
 </div>
 
-<div class = "footer">
-    <div class="input" id = "input">
+<div class="footer">
+    <div class="input" id="input">
         <h1> Input</h1>
-        <textarea rows="10" cols="150" name="comment" form="usrform" id = 'msg'></textarea>
+        <textarea rows="10" cols="150" name="comment" form="usrform" id='msg'></textarea>
     </div>
     <h1> Out Put</h1>
     <div class="output">
-        <textarea rows="10" cols="150" name="comment" form="usrform" id = 'outmsg'></textarea>
+        <textarea rows="10" cols="150" name="comment" form="usrform" id='outmsg' readonly></textarea>
     </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{%static 'js/lib/ace.js'%}"></script>
 <script src="{%static 'js/lib/theme-twilight.js'%}"></script>
-
-
 <script>
-
     let editor;
-    
-    document.getElementById('editor').style.fontSize='16px';
+    // const element = document.getElementById("editor");
+    // console.log(element)
+    document.getElementById('editor').style.fontSize = '16px';
     window.onload = function() {
         editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
@@ -67,15 +71,15 @@
 
         let language = $("#languages").val();
 
-        if(language == 'c' || language == 'cpp')editor.session.setMode("ace/mode/c_cpp");
-        else if(language == 'python')editor.session.setMode("ace/mode/python");
-        else if(language == 'javascipt')editor.session.setMode("ace/mode/javascript");
+        if (language == 'c' || language == 'cpp') editor.session.setMode("ace/mode/c_cpp");
+        else if (language == 'python') editor.session.setMode("ace/mode/python");
+        else if (language == 'javascipt') editor.session.setMode("ace/mode/javascript");
     }
 
 
-    function executeCode() {
+    function RunCode() {
 
-        console.log($("textarea#msg").val())
+        //console.log($("textarea#msg").val())
         $.ajax({
 
             url: "http://127.0.0.1:8000/api/v1/code-post",
@@ -86,20 +90,60 @@
                 "csrfmiddlewaretoken": "{{ csrf_token }}",
                 "language": $("#languages").val(),
                 "code": editor.getSession().getValue(),
-                "problem_id": {{problem_id}},
-                "user_id": {{user_id}},
+                "problem_id": null,
+                "user_id": null,
                 "input": $("textarea#msg").val()
             },
 
+
             success: function(response) {
                 let r = document.getElementById("outmsg");
-                r.innerHTML = "Run Time =" + response.run_time + " ms" + "<br>" + response.result;
+                r.innerHTML = "Run Time =" + response.run_time + '\n' + response.result;
+
+                //$("output").append(r)
+            }
+
+
+        })
+    }
+
+    function SubmitCode() {
+        alert("Are you sure you want to submit the code?");
+        //console.log($("textarea#msg").val())
+        $.ajax({
+
+            url: "http://127.0.0.1:8000/api/v1/code-post",
+
+            method: "POST",
+
+            data: {
+                "csrfmiddlewaretoken": "{{ csrf_token }}",
+                "language": $("#languages").val(),
+                "code": editor.getSession().getValue(),
+                "problem_id": {
+                    {
+                        problem_id
+                    }
+                },
+                "user_id": {
+                    {
+                        user_id
+                    }
+                },
+                "input": null,
+            },
+
+
+            success: function(response) {
+                let r = document.getElementById("outmsg");
+                r.innerHTML = response;
+
+                //$("output").append(r)
             }
 
 
         })
     }
 </script>
-
 
 {%endblock%}

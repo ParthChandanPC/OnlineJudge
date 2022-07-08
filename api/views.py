@@ -8,7 +8,7 @@ from OJ.models import Problem, TestCases, Submissions, User
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .run_code import run_code
-from .code import Run
+from .code import Run,Submit
 
 @api_view(['GET'])
 def Problem_post(request):
@@ -61,9 +61,9 @@ def Code_post(request):
     if request.method == 'POST':
         serializer = CodeSerializer(data=request.data)
         if serializer.is_valid():
-            user = User.objects.get(id=serializer.data['user_id'])
-            problem = Problem.objects.get(id=serializer.data['problem_id'])
-            output = Run(serializer.data['code'],serializer.data['language'],serializer.data['input'])
-            output['result'] = output['result'].replace('\n','<br>')
+            if serializer.data['user_id'] == None and serializer.data['problem_id'] == None:
+                output = Run(serializer.data['code'],serializer.data['language'],serializer.data['input'])
+            else:
+                output = Submit(serializer.data['code'],serializer.data['language'],serializer.data['problem_id'],serializer.data['user_id'])
             return Response(output, status=201)
         return Response(serializer.errors, status=400)
