@@ -1,5 +1,4 @@
-#!c:\users\pavan\onedrive\desktop\onlinejudge\env\scripts\python.exe
-# When the django-admin.py deprecation ends, remove this script.
+
 import warnings
 
 from django.core import management
