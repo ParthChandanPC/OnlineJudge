@@ -1,40 +1,41 @@
-{%extends 'main.html' %}
-
-
-{% block content%}
+{%extends 'main.html' %} {% block content%}
 <div class="nav">
-        <ul class = 'left'>
-            <li><i class="fa fa-square" style="font-size:40px;color:rgb(255, 255, 255)">OnlineJudge</i></li>
-        </ul>
-        <ul class="right">
-            <li><a href= '{% url "logout"%}'><h3>Logout</h3></a></li>
-            <!-- <li><a href= '{% url "register"%}'><h3>Register</h3></a></li> -->
-            
-        </ul>
+    <ul class='left'>
+        <li>CodeAlong</li>
+    </ul>
+    <ul class="right">
+        <li>
+            <a href='{% url "logout"%}'>
+                <h3>Logout</h3>
+            </a>
+        </li>
+        <!-- <li><a href= '{% url "register"%}'><h3>Register</h3></a></li> -->
+
+    </ul>
 </div>
 <div class="Question-list">
-    <h1>List Of Questions</h1>
+    <h1>Practice Area</h1>
     {% for question in data %}
-        <a href="/">
-            <div class="Question">
-                <ul>
-                    <li style = "width:auto;">
-                        <h3 class="question-title">{{question.title}}</h3>
-                    </li>
-                    <li style = "width:auto;color:green">
-                        <h4>Difficulty : {{question.difficulty}}</h4>
-                    </li>
-                    <li style = "width:auto">
-                        <a href = "{% url 'problem_view' question.id %}">
-                            <button class="button button1" role="button">Solve Challange</button>
-                        </a>
-                    </li>
-                    
-                </ul>
-            </div>
-            
-        </a>
+    <a href="/">
+        <div class="Question">
+            <ul>
+                <li style="width:auto;">
+                    <h3 class="question-title">{{question.title}}</h3>
+                </li>
+                <li style="width:auto;color:green">
+                    <h4>Difficulty : {{question.difficulty}}</h4>
+                </li>
+                <li style="width:auto">
+                    <a href="{% url 'problem_view' question.id %}">
+                        <button class="button button1" role="button">Solve Challange</button>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </a>
     {% endfor %}
-        
-    </div>
+
+</div>
 {%endblock%}
