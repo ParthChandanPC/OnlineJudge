@@ -25,15 +25,16 @@
                 <h1>{{data.title}}</h1><br>
             </li>
             <li>
-                <a href="{% url 'submissions' data.id %}" class='button button1'>My Submissions</a>
+                <a href="{% url 'submissions' data.id %}" class='button button1'>Submissions</a>
+                <a href="{% url 'ide' data.id%}">
+                    <button class="button button1 submit">Submit</button>
+                </a>
             </li>
         </ul>
     </div>
     <div class="Question-content">
         <p>{{data.description|safe}}</p>
     </div>
-    <a href="{% url 'ide' data.id%}">
-        <button class="button button1 submit">Submit</button>
-    </a>
+
 </div>
 {%endblock%}
