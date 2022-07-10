@@ -20,7 +20,7 @@ def loginUser(request):
             messages.info(request, 'Username or password is incorrect')
             return render(request, 'login.html')
     return render(request,'login.html')
-    # login function
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
