@@ -22,6 +22,6 @@
     <h1>REGISTER</h1>
     {{form.username.label}} {{form.username}} {{form.email.label}} {{form.email}} {{form.password1.label}} {{form.password1}} {{form.password2.label}} {{form.password2}} {{form.submit}}
     <button type="submit">SUBMIT</button>
-    <p>{{form.errors}}</p>
+    <p style="color: red;">{{form.errors}}</p>
 </form>
 {% endblock %}

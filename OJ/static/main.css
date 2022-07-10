@@ -1,10 +1,9 @@
 body {
-    font-style: italic;
     margin: 0;
 }
 
 .button {
-    background-color: #4CAF50;
+    background-color: #fc873a;
     border: none;
     color: white;
     padding: 16px 32px;
@@ -15,16 +14,17 @@ body {
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
+    border-radius: 50%;
 }
 
 .button1 {
     background-color: white;
     color: black;
-    border: 2px solid #4CAF50;
+    border: 2px solid #fc873a;
 }
 
 .button1:hover {
-    background-color: #4CAF50;
+    background-color: #fc873a;
     color: white;
 }
 
@@ -43,7 +43,7 @@ body {
 }
 
 .nav .left:hover {
-    color: #638def;
+    color: #fc9753;
 }
 
 .nav ul {
