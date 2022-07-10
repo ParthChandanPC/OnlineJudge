@@ -3,9 +3,7 @@ import os
 from OJ.models import User,Problem,Submissions,TestCases
 from django.http import HttpResponse
 
-
 def run_python(code,test_case=None):
-
     
     file_name = 'code.py'
     file = open(file_name, 'w')
@@ -38,16 +36,10 @@ def run_python(code,test_case=None):
 
 
 def run_c(code, problem_id):
-    # Create a file with the code
     file_name = 'code.c'
     file = open(file_name, 'w')
     file.write(code)
     file.close()
-
-
-    # Run the code
-    # process = subprocess.Popen(['g++', file_name, '-o', 'code'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # stdout, stderr = process.communicate()
 
     subprocess.run(["g++", file_name])
     f = open('a.txt','w')
@@ -59,12 +51,9 @@ def run_c(code, problem_id):
     os.remove('a.txt') 
     os.remove(file_name)
     os.remove('a.exe')
-
-    # print(stdout.decode('utf-8'))
     return output
 
 def run_cpp(code, problem_id):
-    # Create a file with the code
     file_name = 'code.cpp'
     file = open(file_name, 'w')
     file.write(code)
@@ -80,18 +69,15 @@ def run_cpp(code, problem_id):
     os.remove('a.txt') 
     os.remove(file_name)
     os.remove('a.exe')
-
     
     return output
 
 def run_javascript(code, problem_id):
-    # Create a file with the code
     file_name = 'code.js'
     file = open(file_name, 'w')
     file.write(code)
     file.close()
 
-    # Run the code
     process = subprocess.Popen(['node', file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
     os.remove(file_name)
