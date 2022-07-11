@@ -378,6 +378,11 @@ form .inputGroup1.focusWithText .helper {
     font-size: larger;
 }
 
+.btn:hover {
+    background-color: rgba(6, 2, 2, 0.283);
+    cursor: pointer;
+}
+
 .output {
     padding: 4px;
     min-height: 100px;
