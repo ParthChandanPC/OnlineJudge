@@ -118,12 +118,8 @@
                 "csrfmiddlewaretoken": "{{ csrf_token }}",
                 "language": $("#languages").val(),
                 "code": editor.getSession().getValue(),
-                "problem_id": {
-                    problem_id
-                },
-                "user_id": {
-                    user_id
-                },
+                "problem_id": {{problem_id}},
+                "user_id": {{user_id}},
                 "input": null,
             },
 
