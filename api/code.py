@@ -138,7 +138,7 @@ def Submit(code,language,problem_id,user_id):
         elif Result['result'] == input_.output and Result['run_time'] > problem.time_limit:
             out = 'Time Limit Exceeded on test case ' + str(len(test_cases) - length_test_cases)
         else:
-            out = 'Wrong Answer on test case ' + str(len(test_cases) - length_test_cases)
+            out = 'Wrong Answer on test case ' + str(len(test_cases) - length_test_cases) 
             break
     if length_test_cases == 0:
         out = 'Accepted'
