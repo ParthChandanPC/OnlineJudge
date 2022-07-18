@@ -37,11 +37,11 @@ def logoutUser(request):
     return redirect('login')
 @login_required(login_url='login')
 def home(request):
-    data = requests.get('http://127.0.0.1:8000/api/v1/problems?format=json').json()
+    data = requests.get('http://oj-codealong.herokuapp.com//api/v1/problems?format=json').json()
     return render(request,'home.html',{'data':data})
 @login_required(login_url='login')
 def problem_view(request,id):
-    data = requests.get(f'http://127.0.0.1:8000/api/v1/problems/{id}?format=json').json()
+    data = requests.get(f'http://oj-codealong.herokuapp.com//api/v1/problems/{id}?format=json').json()
     return render(request,'problem_view.html',{'data':data,'User':User}) 
 
 
