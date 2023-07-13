@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "OnlineJudge/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "OnlineJudge/wsgi.py"
+      }
+    ]
+}
