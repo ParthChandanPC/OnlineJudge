@@ -81,12 +81,12 @@ WSGI_APPLICATION = 'OnlineJudge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'URL': os.getenv('postgresql://postgres:xo7f1MMibgWGghTbyobH@containers-us-west-70.railway.app:6114/railway'),
-        'NAME': os.getenv('railway'),
-        'USER': os.getenv('postgres'),
-        'PASSWORD': os.getenv('xo7f1MMibgWGghTbyobH'),
-        'HOST': os.getenv('containers-us-west-70.railway.app'),
-        'PORT': os.getenv('6114'),
+        'URL': os.getenv('POSTGRES_URL'),
+        'NAME': os.getenv('PGNAME'),
+        'USER': os.getenv('PGUSER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('PGHOST'),
+        'PORT': os.getenv('PGPORT),
     }
 }
 
